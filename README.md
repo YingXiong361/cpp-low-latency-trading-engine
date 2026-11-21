@@ -36,4 +36,4 @@ ctest --preset asan-ubsan
 
 Add `cancel(OrderId)` to the processor. Write a test that submits order 101, cancels it, then submits the same ID again. The final submission should return `DuplicateId`. Add cases for an unknown ID and a second cancellation. Once these transitions work, connect the processor to a text command fixture and compare its output to a golden file.
 
-The [architecture](docs/architecture.md) describes the module boundaries. The [design decisions](docs/design-decisions.md) explain the representation choices and the [Week 1 retrospective](docs/week01-retrospective.md) has prompts for recording what you learned.
+The [architecture index](docs/architecture/README.md) links the seven Week 1 decisions. The [domain model record](docs/architecture/decisions/ADR-004-domain-model-and-types.md) explains the representation choices. The local Week 1 retrospective (`docs/week01-retrospective.md`) has prompts for recording what you learned.

@@ -6,5 +6,6 @@
 /AGENTS.md
 /.clangd
 .vscode
-docs/
+/docs/*
+!/docs/architecture/
 
