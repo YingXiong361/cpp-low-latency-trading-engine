@@ -1,0 +1,10 @@
+/build/
+/vcpkg_installed/
+/CMakeUserPresets.json
+/compile_commands.json
+/.cache/clangd/
+/AGENTS.md
+/.clangd
+.vscode
+docs/
+
