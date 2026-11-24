@@ -2,12 +2,15 @@ module trading.processor;
 
 namespace trading {
 
-SubmitResult OrderProcessor::submit(const Order& order) {
+SubmitResponse OrderProcessor::submit(const Order& order) {
     if (!order.is_valid()) {
-        return SubmitResult::InvalidOrder;
+        return {SubmitResult::Rejected, SubmitRejectReason::InvalidOrder};
     }
     const auto insertion = orders_.try_emplace(order.id, order);
-    return insertion.second ? SubmitResult::Accepted : SubmitResult::DuplicateId;
+    if (!insertion.second) {
+        return {SubmitResult::Rejected, SubmitRejectReason::DuplicateId};
+    }
+    return {.Result = SubmitResult::Accepted};
 }
 
 }

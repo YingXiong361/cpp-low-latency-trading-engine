@@ -6,7 +6,7 @@ namespace {
 
 using namespace trading;
 
-TEST(OrderTest, AcceptsPositiveIntegerTicksAndQuantity) {
+TEST(OrderTest, AcceptsPositivePriceUnitsAndQuantity) {
     const Order order{1, {1}, Side::Sell, 1, 1};
     EXPECT_TRUE(order.is_valid());
 }

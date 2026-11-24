@@ -1,6 +1,6 @@
 # ADR-004: Trading domain model and types
 
-- Status: Accepted
+- Status: Accepted (price representation superseded by [ADR-008](ADR-008-price-units-and-tick-bands.md) on 2026-11-24)
 - Date: 2026-11-21
 - Decision owners: Project Engineering Team
 

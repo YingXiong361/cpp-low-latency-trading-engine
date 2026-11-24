@@ -8,7 +8,7 @@ struct Order {
     OrderId id{};
     Instrument instrument{};
     Side side{};
-    PriceTicks price{};
+    PriceUnits price{};
     Quantity quantity{};
 
     [[nodiscard]] constexpr bool is_valid() const noexcept {

@@ -6,11 +6,11 @@
 
 ## 1. Context
 
-A price of 100 ticks means 1.00 currency unit for an instrument with a 0.01 tick and 5.00 for one with a 0.05 tick. An order carries an instrument ID, but the current `Instrument` value contains only that ID. A future gateway needs a consistent way to interpret prices, validate quantities, and check whether the instrument is open for trading.
+A fixed price unit gives an integer price its meaning. A separate tick schedule determines which prices can be submitted for the instrument. An order carries an instrument ID, but the current `Instrument` value contains only that ID. A future gateway needs a consistent way to interpret prices, validate quantities, and check whether the instrument is open for trading.
 
 ## 2. Decision
 
-Introduce an instrument reference-data component keyed by a stable, nonzero instrument ID. Each definition carries the symbol, instrument type, exchange, currency, tick size, lot size, and trading status. A symbol may change while the instrument retains its identity. Start with a versioned local file or deterministic seed dataset. Select the same dataset version when replaying a recorded run.
+Introduce an instrument reference-data component keyed by a stable, nonzero instrument ID. Each definition carries the symbol, instrument type, exchange, currency, fixed price unit, tick schedule, lot size, and trading status. A constant tick uses one band. At catalog load, check coverage of the supported price range, reject overlapping bands, and verify that bounds, grid origins, and increments are exactly representable in the fixed unit. See [ADR-008](ADR-008-price-units-and-tick-bands.md) for the boundary rule. A symbol may change while the instrument retains its identity. Start with a versioned local file or deterministic seed dataset. Select the same dataset version when replaying a recorded run.
 
 ## 3. Alternatives considered
 
@@ -22,7 +22,7 @@ The exchange and trading application can interpret the same order consistently. 
 
 ## 5. Implementation implications
 
-Week 1 validation currently checks that the instrument ID is nonzero. Catalog membership, tick and lot rules, and trading status are future gateway checks. A first catalog test can load two definitions with different tick sizes, look up each by ID, verify the two conversions above, and check that an unknown ID produces an explicit lookup failure. This fixture can run locally before any download or refresh mechanism exists.
+Week 1 validation currently checks that the instrument ID is nonzero. Catalog membership, tick and lot rules, and trading status are future gateway checks. A first catalog test can load one constant-tick and one banded instrument, look up each by ID, verify the boundary cases in ADR-008, and check that an unknown ID produces an explicit lookup failure. This fixture can run locally before any download or refresh mechanism exists.
 
 ## 6. References
 

@@ -1,6 +1,6 @@
 # C++ Low-Latency Trading Engine
 
-A C++23 study project that starts with the lifecycle of a single order. The starter validates new orders, stores accepted orders by ID, and rejects duplicates. The command-line demo submits a buy order for 100 units of instrument 1 at 12,500 ticks. Later milestones introduce cancellation, replay, matching, and latency measurement.
+A C++23 study project that starts with the lifecycle of a single order. The starter validates new orders, stores accepted orders by ID, and rejects duplicates. The command-line demo submits a buy order for 100 units of instrument 1 at a price of 12,500 price units. Later milestones introduce cancellation, replay, matching, and latency measurement.
 
 ## Build, test, and run
 
