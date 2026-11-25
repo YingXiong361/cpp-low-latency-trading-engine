@@ -6,7 +6,7 @@
 
 ## 1. Context
 
-An exchange and its client have different views of the same order. The application can request a cancellation. Only the exchange can decide whether the order is still open. Week 1 needs a way to test that distinction before either side has a network connection.
+An exchange and its client have different views of the same order. The application can request a cancellation. Only the exchange can decide whether the order is still open. Sprint 1 needs a way to test that distinction before either side has a network connection.
 
 ## 2. Decision
 

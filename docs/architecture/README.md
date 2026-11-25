@@ -1,4 +1,4 @@
-# Week 1 architecture decisions
+# Sprint 1 architecture decisions
 
 The target platform has an exchange simulator and a trading application. The first runnable piece is smaller. A CLI submits one order to an in-process `OrderProcessor` and prints `ACCEPTED 101`. The tests exercise the same processor with invalid orders and duplicate IDs. [Build and run the demo](../../README.md#build-test-and-run).
 
@@ -19,6 +19,6 @@ An accepted record guides implementation. Each record identifies the code availa
 
 ## From the demo to replay
 
-The next Week 1 exercise is cancellation (TRADING-004). Submit order 101, cancel it, then submit 101 again. The last command should return `DuplicateId`. Also test cancellation of an unknown ID and a second cancellation of 101. Those processor tests establish the results that the file-driven CLI (TRADING-005) should reproduce from a fixture. Order books, matching, and strategy execution belong to later milestones.
+The next Sprint 1 exercise is cancellation (TRADING-004). Submit order 101, cancel it, then submit 101 again. The last command should return `DuplicateId`. Also test cancellation of an unknown ID and a second cancellation of 101. Those processor tests establish the results that the file-driven CLI (TRADING-005) should reproduce from a fixture. Order books, matching, and strategy execution belong to later milestones.
 
 When a decision changes, add a superseding ADR that explains the new evidence and any migration. Mark the original record as superseded and link the two so readers can follow the decision history.

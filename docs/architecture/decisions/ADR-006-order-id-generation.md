@@ -6,7 +6,7 @@
 
 ## 1. Context
 
-The Week 1 CLI supplies order ID 101, and the processor checks whether it has accepted that ID in the current session. A future gateway will need to correlate a client's request with an exchange-assigned order. A process restart also needs to be visible when reading logs that span multiple runs.
+The Sprint 1 CLI supplies order ID 101, and the processor checks whether it has accepted that ID in the current session. A future gateway will need to correlate a client's request with an exchange-assigned order. A process restart also needs to be visible when reading logs that span multiple runs.
 
 ## 2. Decision
 
@@ -22,7 +22,7 @@ Tests can predict the next exchange ID given the same initial sequence and input
 
 ## 5. Implementation implications
 
-Keep the Week 1 processor API and its caller-supplied fixture IDs while testing duplicate rejection and cancellation (TRADING-004). When the gateway is introduced, give client and exchange IDs distinct types and return their association in an acknowledgement. Test with two simulated runs. The first issues IDs 1 and 2, the second issues ID 1, and the recorded run/ID pairs distinguish all three orders. Durable allocation can be revisited when restart recovery becomes a requirement.
+Keep the Sprint 1 processor API and its caller-supplied fixture IDs while testing duplicate rejection and cancellation (TRADING-004). When the gateway is introduced, give client and exchange IDs distinct types and return their association in an acknowledgement. Test with two simulated runs. The first issues IDs 1 and 2, the second issues ID 1, and the recorded run/ID pairs distinguish all three orders. Durable allocation can be revisited when restart recovery becomes a requirement.
 
 ## 6. References
 

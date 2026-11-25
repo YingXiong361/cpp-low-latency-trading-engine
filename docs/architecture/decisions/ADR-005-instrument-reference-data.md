@@ -22,7 +22,7 @@ The exchange and trading application can interpret the same order consistently. 
 
 ## 5. Implementation implications
 
-Week 1 validation currently checks that the instrument ID is nonzero. Catalog membership, tick and lot rules, and trading status are future gateway checks. A first catalog test can load one constant-tick and one banded instrument, look up each by ID, verify the boundary cases in ADR-008, and check that an unknown ID produces an explicit lookup failure. This fixture can run locally before any download or refresh mechanism exists.
+Sprint 1 validation currently checks that the instrument ID is nonzero. Catalog membership, tick and lot rules, and trading status are future gateway checks. A first catalog test can load one constant-tick and one banded instrument, look up each by ID, verify the boundary cases in ADR-008, and check that an unknown ID produces an explicit lookup failure. This fixture can run locally before any download or refresh mechanism exists.
 
 ## 6. References
 

@@ -10,7 +10,7 @@ Two commands for the same order can produce different outcomes when reversed. A 
 
 ## 2. Decision
 
-Process commands sequentially on one thread in arrival order. In Week 1, call order defines arrival order. For file replay, line order will define it. Complete each transition and produce its result before processing the next command. The processor owns the session's mutable order state. When matching is introduced, each instrument's book will likewise have one logical writer. Replaying the same ordered inputs from the same initial state must reproduce the same results in the same order.
+Process commands sequentially on one thread in arrival order. In Sprint 1, call order defines arrival order. For file replay, line order will define it. Complete each transition and produce its result before processing the next command. The processor owns the session's mutable order state. When matching is introduced, each instrument's book will likewise have one logical writer. Replaying the same ordered inputs from the same initial state must reproduce the same results in the same order.
 
 ## 3. Alternatives considered
 
