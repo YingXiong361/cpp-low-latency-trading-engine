@@ -1,12 +1,12 @@
-module;
-#include <cstdint>
-
 export module trading.instrument;
+export import trading.types;
 
 export namespace trading {
 
 struct Instrument {
-    std::uint32_t id{};
+    InstrumentId id;
+
+    constexpr Instrument(InstrumentId instrument_id) noexcept : id{instrument_id} {}
 };
 
 }

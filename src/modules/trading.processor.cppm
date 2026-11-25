@@ -1,8 +1,10 @@
 module;
 
-#include <unordered_map>
+#include <cstddef>
 #include <cstdint>
+#include <functional>
 #include <string_view>
+#include <unordered_map>
 
 export module trading.processor;
 export import trading.order;
@@ -37,7 +39,13 @@ public:
     [[nodiscard]] SubmitResponse submit(const Order& order);
 
 private:
-    std::unordered_map<OrderId, Order> orders_;
+    struct OrderIdHash {
+        std::size_t operator()(OrderId id) const noexcept {
+            return std::hash<std::uint64_t>{}(id.value());
+        }
+    };
+
+    std::unordered_map<OrderId, Order, OrderIdHash> orders_;
 };
 
 }
