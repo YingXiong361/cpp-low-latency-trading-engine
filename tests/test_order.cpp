@@ -15,6 +15,8 @@ template<class A, class B>
 concept Addable = requires(A a, B b) { a + b; };
 
 using SubmitArgs = void(OrderId, Quantity);
+static_assert(std::is_aggregate_v<Instrument>);
+static_assert(!std::is_default_constructible_v<Instrument>);
 static_assert(std::is_invocable_v<SubmitArgs, OrderId, Quantity>);
 static_assert(!std::is_invocable_v<SubmitArgs, Quantity, OrderId>);
 static_assert(!Addable<OrderId, Quantity>);

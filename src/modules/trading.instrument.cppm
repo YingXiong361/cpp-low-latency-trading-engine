@@ -5,8 +5,6 @@ export namespace trading {
 
 struct Instrument {
     InstrumentId id;
-
-    constexpr Instrument(InstrumentId instrument_id) noexcept : id{instrument_id} {}
 };
 
 }
