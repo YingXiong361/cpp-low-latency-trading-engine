@@ -1,5 +1,4 @@
 module;
-#include <compare>
 #include <cstdint>
 #include <stdexcept>
 
