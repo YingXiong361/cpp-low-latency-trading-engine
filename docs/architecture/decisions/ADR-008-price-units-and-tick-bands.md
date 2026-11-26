@@ -11,9 +11,9 @@ An instrument can trade in increments of 0.01 below 10.00 and 0.10 from 10.00 up
 
 ## Decision
 
-Store each positive order price as a signed 64-bit integer count of fixed units (`PriceUnits`). Define the unit in the instrument's quote currency and keep it constant across all bands. Choose a unit that represents every supported tick increment and band boundary exactly, with enough integer range for the maximum price. For example, the smaller of two increments, 0.02 and 0.05, cannot represent both. A unit of 0.01 represents them as 2 and 5.
+Store each order price as a signed 64-bit count of fixed units (`PriceUnits`). The permitted range belongs to the instrument. A futures spread may permit negative and zero quotes. Define the unit in the instrument's quote currency and keep it constant across all bands. Choose a unit that represents every supported tick increment and band boundary exactly, with enough integer range for the maximum price. For example, the smaller of two increments, 0.02 and 0.05, cannot represent both. A unit of 0.01 represents them as 2 and 5.
 
-Use inclusive lower and exclusive upper band bounds. Express bounds and positive tick increments in integer units. For a price within its band, validate `(price_units - grid_origin_units) % tick_units == 0`. In the example below the grid starts at each band's lower bound.
+Use inclusive lower and exclusive upper band bounds. Express bounds and positive tick increments in integer units. For a price within its band, validate `(price_units - grid_origin_units) % tick_units == 0`. For signed ranges, evaluate the grid offset without overflowing when the price and origin have opposite signs. In the example below the grid starts at each band's lower bound.
 
 | Quote | Units at 0.01 | Applicable tick | Result |
 | --- | ---: | ---: | --- |
@@ -28,6 +28,6 @@ At order entry, parse the decimal price exactly once, check the supported range,
 
 ## Implementation and migration
 
-The order already stores its price as `PriceUnits`, a signed 64-bit integer. The instrument currently carries only its ID. Converting units to a quoted price and validating tick bands require the instrument definitions proposed in [ADR-005](ADR-005-instrument-reference-data.md). Convert existing tick-count fixtures using their original instrument definition. For example, 100 legacy ticks of 0.05 become 500 units of 0.01. A fixture whose original tick size is unknown needs that information before it can be converted.
+The order already stores its price as `PriceUnits`, a distinct type with a signed 64-bit representation. The demo still enforces positive prices. The instrument currently carries only its ID. Converting units to a quoted price and validating tick bands require the instrument definitions proposed in [ADR-005](ADR-005-instrument-reference-data.md). Convert existing tick-count fixtures using their original instrument definition. For example, 100 legacy ticks of 0.05 become 500 units of 0.01. A fixture whose original tick size is unknown needs that information before it can be converted.
 
 Test both sides of a band boundary, exact decimal round trips, unrepresentable prices, overflow, and replay against the recorded reference-data version.
