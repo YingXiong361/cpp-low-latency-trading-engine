@@ -41,7 +41,7 @@ public:
 private:
     struct OrderIdHash {
         std::size_t operator()(OrderId id) const noexcept {
-            return std::hash<std::uint64_t>{}(id.value());
+            return std::hash<std::int64_t>{}(id.value());
         }
     };
 

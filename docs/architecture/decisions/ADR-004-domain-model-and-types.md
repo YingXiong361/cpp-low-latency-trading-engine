@@ -14,12 +14,12 @@
 
 An order is a domain entity whose `OrderId` identifies it throughout its lifecycle. The processor borrows the submitted order by const reference and stores an accepted order by value. Its copy has the same logical identity and a lifetime independent of the caller's object.
 
-- Reserve zero as invalid for both order and instrument identifiers. An order and its instrument may have the same numeric ID because their types distinguish their roles.
+- Require positive order and instrument identifiers. An order and its instrument may have the same numeric ID because their types distinguish their roles.
 - Use distinct types for `OrderId`, `InstrumentId`, `PriceUnits`, and `Quantity`. A function expecting `(OrderId, Quantity)` must reject swapped arguments at compile time. Adding a quantity to an identifier has no domain meaning. e.g.
 
 ```c++
-using OrderId = std::uint64_t;
-using Quantity = std::uint64_t;
+using OrderId = std::int64_t;
+using Quantity = std::int64_t;
 
 void no_type_safety(OrderId orderId, Quantity qty) {
     OrderId newId = orderId + qty;
@@ -59,9 +59,11 @@ Value members let `Order` follow the Rule of Zero and give the processor its own
 
 ## 5. Implementation implications
 
-Each domain wrapper stores one integer. Both identifier types hold a private unsigned 64-bit value. Their explicit constructors reject zero with `std::invalid_argument`. Construct an ID with `OrderId{5}` and read it with `id.value()` when printing or hashing.
+Each identifier takes a `std::int64_t` and rejects zero and negative values with `std::invalid_argument`. Callers check that unsigned or wider inputs fit the ID range of 1 through `INT64_MAX` before conversion. Construct an ID with `OrderId{5}` and read it with `id.value()` when printing or hashing.
 
-`Quantity` wraps an unsigned 64-bit count and `PriceUnits` wraps a signed 64-bit count. Their defaulted three-way comparisons use the stored integers, so `Quantity{4} < Quantity{5}` and `PriceUnits{-1} < PriceUnits{0}`. Comparing a quantity with a price is a compile-time error.
+`Quantity` takes a `std::int64_t` and rejects negative counts with `std::invalid_argument`. Callers check that unsigned or wider inputs fit before conversion. Addition above `INT64_MAX` and subtraction below zero raise `std::overflow_error`. Subtracting an exact fill leaves zero units remaining.
+
+`PriceUnits` uses the full signed 64-bit range. Quantities and prices each compare within their own type, so `Quantity{4} < Quantity{5}` and `PriceUnits{-1} < PriceUnits{0}`. Comparing a quantity with a price is a compile-time error.
 
 The current demo supports a positive-price instrument and still rejects zero and negative prices in `Order::is_valid()`. Before supporting spread orders, replace that demo check with validation against the instrument definition. Include negative, zero, and positive quotes in the spread tests, alongside a positive-only instrument that rejects the same nonpositive quotes.
 
