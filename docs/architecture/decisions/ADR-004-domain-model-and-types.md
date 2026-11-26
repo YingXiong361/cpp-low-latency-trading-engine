@@ -33,7 +33,7 @@ void test() {
 }
 ```
 
-- Represent side with the scoped enumeration `Side`, whose named values are `Side::Buy` and `Side::Sell`.
+- An order defaults to `Side::Unspecified`. Submission requires `Side::Buy` or `Side::Sell` and returns `InvalidOrder` if the caller omits the side.
 - Quantity counts whole tradable units. A submitted order requires at least one unit. Submitting `Quantity{0}` returns `InvalidOrder` and leaves the ID available for a corrected submission. The instrument defines what one unit represents.
 - A price counts fixed units in the instrument's quote currency. Keep the representation signed. For a spread quoted as leg A minus leg B, prices of 98 and 100 give a spread of −2; equal legs give zero. The instrument's permitted range and tick schedule determine which prices it accepts.
 - Represent lifecycle status with a scoped enum when cancellation is introduced.

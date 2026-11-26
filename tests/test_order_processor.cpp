@@ -28,4 +28,21 @@ TEST(OrderProcessorTest, InvalidSubmissionLeavesTheIdAvailable) {
     EXPECT_EQ(processor.submit(order).Result, SubmitResult::Accepted);
 }
 
+TEST(OrderProcessorTest, RejectsAnOmittedSideAndAcceptsTheCorrectedOrder) {
+    OrderProcessor processor;
+    Order order{
+        .id = OrderId{101},
+        .instrument = {InstrumentId{1}},
+        .price = PriceUnits{12500},
+        .quantity = Quantity{100}
+    };
+    EXPECT_EQ(order.side, Side::Unspecified);
+    const auto response = processor.submit(order);
+    ASSERT_EQ(response.Result, SubmitResult::Rejected);
+    EXPECT_EQ(response.RejectReason, SubmitRejectReason::InvalidOrder);
+
+    order.side = Side::Sell;
+    EXPECT_EQ(processor.submit(order).Result, SubmitResult::Accepted);
+}
+
 }

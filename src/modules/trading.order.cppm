@@ -7,7 +7,7 @@ export namespace trading {
 struct Order {
     OrderId id;
     Instrument instrument;
-    Side side{};
+    Side side{Side::Unspecified};
     PriceUnits price{};
     Quantity quantity{};
 

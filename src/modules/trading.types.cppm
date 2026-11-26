@@ -89,6 +89,6 @@ struct PriceUnits {
     }
 };
 
-enum class Side : std::uint8_t { Buy, Sell };
+enum class Side : std::uint8_t { Buy, Sell, Unspecified };
 
 }
