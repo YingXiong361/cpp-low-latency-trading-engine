@@ -76,6 +76,16 @@ TEST(DomainTypesTest, PriceArithmeticChecksBothBounds) {
     EXPECT_THROW(max - PriceUnits{-1}, std::overflow_error);
 }
 
+TEST(DomainTypesTest, UpdatingACopiedPriceLeavesTheOriginalIntact) {
+    static_assert(PriceUnits{}.value() == 0);
+    static_assert(std::same_as<decltype(PriceUnits{}.value()), std::int64_t>);
+    const PriceUnits original{-5};
+    auto updated = original;
+    updated = updated + PriceUnits{8};
+    EXPECT_EQ(updated.value(), 3);
+    EXPECT_EQ(original.value(), -5);
+}
+
 TEST(OrderTest, AcceptsMaximumRepresentableFields) {
     const Order order{
         OrderId{std::numeric_limits<std::int64_t>::max()},
