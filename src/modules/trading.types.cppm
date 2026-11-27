@@ -67,13 +67,17 @@ private:
     std::int64_t value_{};
 };
 
-struct PriceUnits {
-    std::int64_t value{};
+class PriceUnits {
+public:
+    constexpr PriceUnits() noexcept = default;
+    explicit constexpr PriceUnits(std::int64_t value) noexcept : value_{value} {}
+
+    [[nodiscard]] constexpr std::int64_t value() const noexcept { return value_; }
     constexpr auto operator<=>(const PriceUnits&) const noexcept = default;
 
     constexpr PriceUnits operator+(const PriceUnits& other) const {
         PriceUnits result{};
-        if (__builtin_add_overflow(value, other.value, &result.value)) {
+        if (__builtin_add_overflow(value_, other.value_, &result.value_)) {
             throw std::overflow_error("PriceUnits addition out of range");
         }
         return result;
@@ -81,11 +85,14 @@ struct PriceUnits {
 
     constexpr PriceUnits operator-(const PriceUnits& other) const {
         PriceUnits result{};
-        if (__builtin_sub_overflow(value, other.value, &result.value)) {
+        if (__builtin_sub_overflow(value_, other.value_, &result.value_)) {
             throw std::overflow_error("PriceUnits subtraction out of range");
         }
         return result;
     }
+
+private:
+    std::int64_t value_{};
 };
 
 enum class Side : std::uint8_t { Buy, Sell, Unspecified };
